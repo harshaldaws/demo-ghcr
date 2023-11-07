@@ -17,5 +17,5 @@ jobs:
     - name: Build the Docker image
       run: |
         docker login --username harshaldaws --password ${{ secrets.GHCR_PAT }} ghcr.io
-        docker buld . -t ghcr.io/harshaldaws/demo-node-app:latest
+        docker bulid . --tag ghcr.io/harshaldaws/demo-node-app:latest
         docker push ghcr.io/harshaldaws/demo-node-app:latest
