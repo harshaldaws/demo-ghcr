@@ -1,4 +1,4 @@
-name: Docker Image CI by Harshal
+name: Docker Image with Node:12.18.1
 
 on:
   push:
