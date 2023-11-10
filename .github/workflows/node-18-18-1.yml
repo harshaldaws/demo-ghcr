@@ -1,0 +1,21 @@
+name: Docker Image with Node:18.18.1
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker login --username harshaldaws --password ${{ secrets.GHCR_PAT }} ghcr.io
+        docker build . --file Dockerfile1 --tag ghcr.io/harshaldaws/demo-node-app:latest
+        docker push ghcr.io/harshaldaws/demo-node-app:latest
