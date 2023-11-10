@@ -1,6 +1,6 @@
-FROM alpine:3.17
+FROM node:10-alpine
 
-ENV NODE_VERSION 18.18.2
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
 WORKDIR /home/node/app
 
@@ -10,7 +10,7 @@ USER node
 
 RUN npm install
 
-COPY . .
+COPY --chown=node:node . .
 
 EXPOSE 8080
 
