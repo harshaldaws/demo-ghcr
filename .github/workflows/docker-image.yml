@@ -53,7 +53,7 @@ jobs:
         uses: snyk/actions/docker@master
         with:
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=low --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
