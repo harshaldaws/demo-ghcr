@@ -47,6 +47,7 @@ jobs:
           args: --severity-threshold=low --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - run: cat snyk.sarif
 
       - name: Upload Snyk report as sarif (Node 18) 📦
         uses: github/codeql-action/upload-sarif@v2
