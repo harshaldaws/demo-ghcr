@@ -30,17 +30,17 @@ jobs:
           platforms: linux/amd64
           push: true
 
-  scan_docker_image:
+  scan_docker_image_18:
     runs-on: ubuntu-latest
+    needs: [build]
     strategy:
       matrix:
-        node_version: [18, 19]
-    needs: [build]
+        node_version: [18]
     steps:
       - name: 'Checkout Github Action'
         uses: actions/checkout@v3
 
-      - name: Scan Docker image
+      - name: Scan Docker image (Node 18)
         uses: snyk/actions/docker@master
         with:
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
@@ -48,7 +48,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Upload Snyk report as sarif 📦
+      - name: Upload Snyk report as sarif (Node 18) 📦
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif
