@@ -24,6 +24,6 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: 19/
-        tags: ghcr.io/prism-artifacts/node:19
+        tags: ghcr.io/harshaldaws/node:19
         platforms: linux/amd64
         push: true
