@@ -32,7 +32,6 @@ jobs:
 
   scan_docker_image:
     permissions:
-      id-token: read
       contents: read
       packages: read
     runs-on: ubuntu-latest
@@ -46,6 +45,7 @@ jobs:
           registry: ghcr.io
           username: namrataaws
           password: ${{ secrets.GHCR_PAT }}
+
       - name: Scan Docker image
         uses: snyk/actions/docker@master
         with:
