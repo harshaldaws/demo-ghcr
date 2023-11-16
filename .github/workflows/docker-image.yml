@@ -52,7 +52,6 @@ jobs:
       - name: Scan Docker image
         uses: snyk/actions/docker@master
         with:
-          continue-on-error: true
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
           args: --file=Dockerfile --severity-threshold=high --sarif-file-output=snyk.sarif
         env:
