@@ -1,4 +1,4 @@
-name: Docker Image with Node:19.x.x
+name: Docker Image with Node:18-19
 
 on:
   push:
@@ -10,6 +10,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [18, 19]
 
     steps:
     - name: 'Checkout Github Action'
@@ -19,11 +22,11 @@ jobs:
       with:
         registry: ghcr.io
         username: namrataaws
-        password: ${{secrets.GHCR_PAT}}
+        password: ${{ secrets.GHCR_PAT }}
     - name: Build the Docker image
       uses: docker/build-push-action@v5
       with:
-        context: 19/
-        tags: ghcr.io/harshaldaws/node:19
+        context: ${{ matrix.node_version }}/
+        tags: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
         platforms: linux/amd64
         push: true
