@@ -1,4 +1,4 @@
-name: Docker Image with Node:12.18.1
+name: Docker Image with Node:18.18.1
 
 on:
   push:
@@ -7,15 +7,23 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: 'Checkout Github Action'
+      uses: actions/checkout@v3
+    - name: 'Login to Github container registry'
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: namrataaws
+        password: ${{secrets.GHCR_PAT}}
     - name: Build the Docker image
-      run: |
-        docker login --username namrataaws --password ${{ secrets.GHCR_PAT }} ghcr.io
-        docker build . --tag ghcr.io/harshaldaws/demo-node-app:latest
-        docker push ghcr.io/harshaldaws/demo-node-app:latest
+      uses: docker/build-push-action@v5
+      with:
+        context: 18/
+        tags: ghcr.io/prism-artifacts/node:18
+        platforms: linux/amd64
+        push: true
