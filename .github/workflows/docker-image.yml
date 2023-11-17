@@ -14,14 +14,16 @@ jobs:
         node_version: [18, 19]
 
     steps:
-      - name: 'Checkout Github Action'
+      - name: Checkout Github Action
         uses: actions/checkout@v3
-      - name: 'Login to Github container registry'
+
+      - name: Login to Github container registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: namrataaws
           password: ${{ secrets.GHCR_PAT }}
+
       - name: Build the Docker image
         uses: docker/build-push-action@v5
         with:
@@ -40,9 +42,10 @@ jobs:
         node_version: [18, 19]
     needs: [build]
     steps:
-      - name: 'Checkout Github Action'
+      - name: Checkout Github Action
         uses: actions/checkout@v3
-      - name: 'Login to Github container registry'
+
+      - name: Login to Github container registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -50,6 +53,7 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Scan Docker image
+        id: scan
         uses: snyk/actions/docker@master
         with:
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
@@ -61,4 +65,4 @@ jobs:
         if: ${{ steps.scan.outputs.sarif != '' }}
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: ${{ steps.scan.outputs.sarif }}
+          sarif_file: snyk.sarif
