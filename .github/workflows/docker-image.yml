@@ -57,7 +57,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Upload Snyk report as sarif 📦
+      - name: Upload SARIF file
+        if: ${{ steps.scan.outputs.sarif != '' }}
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: snyk.sarif
+          sarif_file: ${{ steps.scan.outputs.sarif }}
