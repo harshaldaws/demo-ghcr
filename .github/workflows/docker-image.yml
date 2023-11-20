@@ -32,7 +32,7 @@ jobs:
           platforms: linux/amd64
           push: true
 
-  scan_docker_image:
+  scan:
     permissions:
       contents: read
       packages: read
@@ -60,6 +60,7 @@ jobs:
           args: --file=${{ matrix.node_version }}/Dockerfile --severity-threshold=low --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - run: echo "Snyk scan exit code:${{ steps.scan.outcome }}"
 
       - name: Upload SARIF file
         if: ${{ steps.scan.outputs.sarif != '' }}
