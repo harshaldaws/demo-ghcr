@@ -58,7 +58,7 @@ jobs:
         uses: snyk/actions/docker@master
         with:
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
-          args: --file=${{ matrix.node_version }}/Dockerfile --sarif=synk.sarif
+          args: --file=${{ matrix.node_version }}/Dockerfile --sarif=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
@@ -68,7 +68,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           # Path to SARIF file relative to the root of the repository
-          sarif: synk.sarif
+          sarif: snyk.sarif
           # Optional category for the results
           # Used to differentiate multiple results for one commit
           category: my-analysis-tool
