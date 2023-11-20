@@ -58,7 +58,7 @@ jobs:
         uses: snyk/actions/docker@master
         with:
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
-          args: --file=${{ matrix.node_version }}/Dockerfile --sarif=snyk.sarif
+          args: --file=${{ matrix.node_version }}/Dockerfile --sarif=synk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
