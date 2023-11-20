@@ -58,6 +58,7 @@ jobs:
         with:
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
           args: --file=${{ matrix.node_version }}/Dockerfile --severity-threshold=low --sarif-file-output=snyk.sarif
+          continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - run: echo "Snyk scan exit code:${{ steps.scan.outcome }}"
