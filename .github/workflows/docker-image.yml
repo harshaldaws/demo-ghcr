@@ -61,7 +61,11 @@ jobs:
           continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      - run: echo "Snyk scan exit code:${{ steps.scan.outcome }}"
+      
+      - name: Snyk Scan
+        run: snyk test --file=${{ matrix.node_version }}/Dockerfile
+      - run: echo "Snyk scan output:${{ steps.scan.outputs.snyk-output }}"
+
 
       - name: Upload SARIF file
         if: ${{ steps.scan.outputs.sarif != '' }}
