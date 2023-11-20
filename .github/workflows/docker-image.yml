@@ -36,6 +36,7 @@ jobs:
     permissions:
       contents: read
       packages: read
+      security-events: write
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -61,12 +62,13 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Upload SARIF file
-        if: ${{ always() }}
-        run: |
-          if [ -s "snyk.sarif" ]; then
-            echo "Uploading SARIF file"
-            echo "SARIF_FILE=snyk.sarif" >> $GITHUB_ENV
-          else
-            echo "No vulnerabilities found."
-          fi
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: synk.sarif
+          # Optional category for the results
+          # Used to differentiate multiple results for one commit
+          category: my-analysis-tool
