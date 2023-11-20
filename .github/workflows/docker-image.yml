@@ -53,22 +53,9 @@ jobs:
           username: namrataaws
           password: ${{ secrets.GHCR_PAT }}
 
-      - name: Scan Docker image
-        id: scan
-        uses: snyk/actions/docker@master
+      - name: Scan for vulnerabilities
+        uses: crazy-max/ghaction-container-scan@v3
         with:
           image: ghcr.io/harshaldaws/node:${{ matrix.node_version }}
-          args: --file=${{ matrix.node_version }}/Dockerfile --sarif=snyk.sarif
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+       
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          # Path to SARIF file relative to the root of the repository
-          sarif: snyk.sarif
-          # Optional category for the results
-          # Used to differentiate multiple results for one commit
-          category: my-analysis-tool
